@@ -1,4 +1,4 @@
-package com.lesson_1.resume;
+package com.lesson_1.resumes;
 
 import java.util.Arrays;
 
@@ -10,7 +10,7 @@ public class ArrayStorage {
     private int counter = 0;
 
     void clear() {
-        Arrays.fill(storage, null);
+        Arrays.fill(storage, 0, counter, null);
         counter = 0;
     }
 
@@ -21,9 +21,8 @@ public class ArrayStorage {
 
     Resume get(String uuid) {
         for (int i = 0; i < size(); i++) {
-            Resume r = storage[i];
-            if (r.uuid.equals(uuid)) {
-                return r;
+            if (storage[i].uuid.equals(uuid)) {
+                return storage[i];
             }
         }
         return null;
@@ -38,7 +37,7 @@ public class ArrayStorage {
             }
         }
         if (k != 0) {
-            if (size() - 1 >= 0) System.arraycopy(storage, 1, storage, 0, size() - 1);
+            if (size() - k >= 0) System.arraycopy(storage, k + 1, storage, k, size() - k - 1);
             counter--;
         }
     }
@@ -47,9 +46,9 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     Resume[] getAll() {
-        Resume[] result = new Resume[size()];
-        System.arraycopy(storage, 0, result, 0, size());
-        return result;
+        Resume[] resumes = new Resume[size()];
+        System.arraycopy(storage, 0, resumes, 0, size());
+        return resumes;
     }
 
     int size() {

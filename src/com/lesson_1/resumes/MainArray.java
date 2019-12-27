@@ -1,4 +1,4 @@
-package com.lesson_1.resume;
+package com.lesson_1.resumes;
 
 import java.io.BufferedReader;
 import java.io.IOException;

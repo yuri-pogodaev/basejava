@@ -1,7 +1,7 @@
-package com.lesson_1.resume;
+package com.lesson_1.resumes;
 
 /**
- * Initial resume class
+ * Initial resumes class
  */
 public class Resume {
 
