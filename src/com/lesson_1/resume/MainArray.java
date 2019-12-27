@@ -1,3 +1,5 @@
+package com.lesson_1.resume;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

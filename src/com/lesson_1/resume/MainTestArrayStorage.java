@@ -1,3 +1,5 @@
+package com.lesson_1.resume;
+
 /**
  * Test for your ArrayStorage implementation
  */
