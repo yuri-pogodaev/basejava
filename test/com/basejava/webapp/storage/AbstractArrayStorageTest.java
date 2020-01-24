@@ -47,7 +47,7 @@ public abstract class AbstractArrayStorageTest {
     public void update() throws Exception {
         Resume newResume = new Resume(UUID_1);
         storage.update(newResume);
-        Assert.assertTrue(newResume == storage.get(UUID_1));
+        Assert.assertEquals(newResume, storage.get(UUID_1));
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -57,11 +57,11 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void getAll() throws Exception {
-        Resume[] result = storage.getAll();
-        Assert.assertEquals(3, result.length);
-        Assert.assertEquals(R1, result[0]);
-        Assert.assertEquals(R2, result[1]);
-        Assert.assertEquals(R3, result[2]);
+        Resume[] actualResume = storage.getAll();
+        Assert.assertEquals(3, actualResume.length);
+        Assert.assertEquals(R1, actualResume[0]);
+        Assert.assertEquals(R2, actualResume[1]);
+        Assert.assertEquals(R3, actualResume[2]);
     }
 
     @Test
