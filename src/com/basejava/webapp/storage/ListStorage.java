@@ -51,7 +51,7 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     public Resume[] getAll() {
-        return //не понимаю че здесь
+        return list.toArray(new Resume[0]);
     }
 
     @Override
