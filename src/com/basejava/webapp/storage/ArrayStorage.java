@@ -17,12 +17,12 @@ public class ArrayStorage extends AbstractArrayStorage {
         storage[counter] = resume;
     }
 
-    protected int getAnyKey(String uuid) {
+    protected String getSearchKey(String uuid) {
         for (int i = 0; i < counter; i++) {
             if (uuid.equals(storage[i].getUuid())) {
-                return i;
+                return String.valueOf(i);
             }
         }
-        return -1;
+        return String.valueOf(-1);
     }
 }
