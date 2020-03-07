@@ -9,7 +9,7 @@ public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected void fillDeletedElement(int index) {
-        storage[index] = storage[counter - 1];
+        storage[ index] = storage[counter - 1];
     }
 
     @Override
@@ -17,12 +17,12 @@ public class ArrayStorage extends AbstractArrayStorage {
         storage[counter] = resume;
     }
 
-    protected String getSearchKey(String uuid) {
+    protected Integer getSearchKey(String uuid) {
         for (int i = 0; i < counter; i++) {
             if (uuid.equals(storage[i].getUuid())) {
-                return String.valueOf(i);
+                return i;
             }
         }
-        return String.valueOf(-1);
+        return -1;
     }
 }

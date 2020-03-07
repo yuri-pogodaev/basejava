@@ -4,7 +4,7 @@ import com.basejava.webapp.model.Resume;
 
 import java.util.Arrays;
 
-public class SortedArrayStorage extends AbstractArrayStorage {
+public   class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected void fillDeletedElement(int index) {
@@ -22,8 +22,8 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected String getSearchKey(String uuid) {
+    protected Integer getSearchKey(String uuid) {
         Resume searchKey = new Resume(uuid);
-        return String.valueOf(Arrays.binarySearch(storage, 0, counter, searchKey));
+        return Arrays.binarySearch(storage, 0, counter, searchKey);
     }
 }
