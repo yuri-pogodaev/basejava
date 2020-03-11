@@ -9,13 +9,13 @@ import org.junit.Test;
 
 public abstract class AbstractStorageTest {
     private static final String UUID_1 = "uuid1";
-    private static final Resume R1 = new Resume(UUID_1);
+    private static final Resume R1 = new Resume(UUID_1, "Name1");
     private static final String UUID_2 = "uuid2";
-    private static final Resume R2 = new Resume(UUID_2);
+    private static final Resume R2 = new Resume(UUID_2, "Name2");
     private static final String UUID_3 = "uuid3";
-    private static final Resume R3 = new Resume(UUID_3);
+    private static final Resume R3 = new Resume(UUID_3, "Name3");
     private static final String UUID_4 = "uuid4";
-    private static final Resume R4 = new Resume(UUID_4);
+    private static final Resume R4 = new Resume(UUID_4, "Name4");
     protected Storage storage;
 
     protected AbstractStorageTest(Storage storage) {
@@ -43,7 +43,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() throws Exception {
-        Resume newResume = new Resume(UUID_1);
+        Resume newResume = new Resume(UUID_1, "New Name");
         storage.update(newResume);
         Assert.assertEquals(newResume, storage.get(UUID_1));
     }
@@ -54,12 +54,10 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void getAll() throws Exception {
-        Resume[] actualResume = storage.getAll();
-        Assert.assertEquals(3, actualResume.length);
-        Assert.assertEquals(R1, actualResume[0]);
-        Assert.assertEquals(R2, actualResume[1]);
-        Assert.assertEquals(R3, actualResume[2]);
+    public void getAllSorted() throws Exception {
+        List<Resume> list = storage.getAllSorted();
+        Assert.assertEquals(3, list.size());
+        Assert.assertEquals(list, Arrays.asList(RESUME_1, RESUME_2, RESUME_3));
     }
 
     @Test

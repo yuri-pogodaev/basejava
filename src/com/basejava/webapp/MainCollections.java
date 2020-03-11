@@ -7,13 +7,13 @@ import java.util.*;
 
 public class MainCollections {
     private static final String UUID_1 = "uuid1";
-    private static final Resume R1 = new Resume(UUID_1);
+    private static final Resume R1 = new Resume(UUID_1, "Name1");
     private static final String UUID_2 = "uuid2";
-    private static final Resume R2 = new Resume(UUID_2);
+    private static final Resume R2 = new Resume(UUID_2, "Name2");
     private static final String UUID_3 = "uuid3";
-    private static final Resume R3 = new Resume(UUID_3);
+    private static final Resume R3 = new Resume(UUID_3, "Name3");
     private static final String UUID_4 = "uuid4";
-    private static final Resume R4 = new Resume(UUID_4);
+    private static final Resume R4 = new Resume(UUID_4, "Name4");
 
     public static void main(String[] args) {
         Collection<Resume> collection = new ArrayList<>();
