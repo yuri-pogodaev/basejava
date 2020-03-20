@@ -35,13 +35,13 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected void doDelete(Object  index) {
+    protected void doDelete(Object index) {
         list.remove(((Integer) index).intValue());
     }
 
     @Override
     protected Resume doGet(Object index) {
-        return list.get((Integer)index);
+        return list.get((Integer) index);
     }
 
     @Override

@@ -59,7 +59,7 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract void doUpdate(Resume resume, Object searchKey);
 
-    protected abstract void doSave(Resume resume,Object searchKey);
+    protected abstract void doSave(Resume resume, Object searchKey);
 
     protected abstract void doDelete(Object searchKey);
 

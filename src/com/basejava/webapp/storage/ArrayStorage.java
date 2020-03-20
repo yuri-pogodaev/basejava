@@ -9,7 +9,7 @@ public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected void fillDeletedElement(int index) {
-        storage[ index] = storage[counter - 1];
+        storage[index] = storage[counter - 1];
     }
 
     @Override

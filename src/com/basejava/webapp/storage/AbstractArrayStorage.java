@@ -22,7 +22,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     @Override
     protected void doUpdate(Resume resume, Object index) {
-        storage[(Integer)index] = resume;
+        storage[(Integer) index] = resume;
     }
 
     @Override
@@ -58,7 +58,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     @Override
     protected boolean isExist(Object index) {
-        return (Integer)index >= 0;
+        return (Integer) index >= 0;
     }
 
     protected abstract void fillDeletedElement(int index);
