@@ -7,6 +7,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 public abstract class AbstractStorageTest {
     private static final String UUID_1 = "uuid1";
     private static final Resume R1 = new Resume(UUID_1, "Name1");
@@ -57,7 +60,7 @@ public abstract class AbstractStorageTest {
     public void getAllSorted() throws Exception {
         List<Resume> list = storage.getAllSorted();
         Assert.assertEquals(3, list.size());
-        Assert.assertEquals(list, Arrays.asList(RESUME_1, RESUME_2, RESUME_3));
+        Assert.assertEquals(list, Arrays.asList(R1, R2, R3));
     }
 
     @Test

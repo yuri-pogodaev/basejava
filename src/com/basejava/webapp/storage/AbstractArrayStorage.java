@@ -47,15 +47,9 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         counter--;
     }
 
-    @Override
-    protected Resume doGet(Object searchKey) {
-        return storage[(Integer) searchKey];
-    }
 
-    public Resume[] getAll() {
-        Resume[] resumes = new Resume[counter];
-        System.arraycopy(storage, 0, resumes, 0, counter);
-        return resumes;
+    public Resume doGet(Object searchKey) {
+        return storage[(Integer) searchKey];
     }
 
     public int size() {
