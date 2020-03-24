@@ -5,7 +5,6 @@ import com.basejava.webapp.model.Resume;
 import org.junit.Assert;
 import org.junit.Test;
 
-
 public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
 
     protected AbstractArrayStorageTest(Storage storage) {
@@ -23,6 +22,4 @@ public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
         }
         storage.save(new Resume("Overflow"));
     }
-
-
 }
