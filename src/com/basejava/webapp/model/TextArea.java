@@ -2,7 +2,15 @@ package com.basejava.webapp.model;
 
 import java.util.Objects;
 
-public class TextArea extends Section {
+public class TextArea implements Section {
+
+    private final String content;
+
+    public TextArea(String content) {
+        Objects.requireNonNull(content, "Content must not be null");
+        this.content = content;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -21,16 +29,5 @@ public class TextArea extends Section {
         return "TextSection{" +
                 "content='" + content + '\'' +
                 '}';
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    private final String content;
-
-    public TextArea(String content) {
-        Objects.requireNonNull(content, "Content must not be null");
-        this.content = content;
     }
 }

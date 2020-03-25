@@ -3,22 +3,18 @@ package com.basejava.webapp.model;
 import java.util.List;
 import java.util.Objects;
 
-public class ListArea extends Section {
-    private final List<String> items;
+public class ListArea implements Section {
+    private final List<String> part;
 
-    public ListArea(List<String> items) {
-        Objects.requireNonNull(items, "Items must not be null");
-        this.items = items;
-    }
-
-    public List<String> getItems() {
-        return items;
+    public ListArea(List<String> part) {
+        Objects.requireNonNull(part, "part must not be null");
+        this.part = part;
     }
 
     @Override
     public String toString() {
         return "ListSection{" +
-                "items=" + items +
+                "part=" + part +
                 '}';
     }
 
@@ -27,11 +23,11 @@ public class ListArea extends Section {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ListArea that = (ListArea) o;
-        return items.equals(that.items);
+        return part.equals(that.part);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(items);
+        return Objects.hash(part);
     }
 }

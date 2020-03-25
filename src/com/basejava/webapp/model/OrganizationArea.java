@@ -3,7 +3,7 @@ package com.basejava.webapp.model;
 import java.util.List;
 import java.util.Objects;
 
-public class OrganizationArea extends Section {
+public class OrganizationArea implements Section {
     private final List<Organization> organizations;
 
     public OrganizationArea(List<Organization> organizations) {
