@@ -9,6 +9,24 @@ public class ResumeTestData {
     public static void main(String[] args) {
         Resume resume = new Resume("Григорий Кислин\n");
         List<String> achievementsList = new ArrayList<>();
+        Map<ContactType, String> contacts = resume.getContacts();
+
+        contacts.put(ContactType.PHONE, "+7(921) 855-0482\n");
+        contacts.put(ContactType.SKYPE, "grigory.kislin\n");
+        contacts.put(ContactType.EMAIL, "gkislin@yandex.ru\n");
+        contacts.put(ContactType.LINKEDIN, "https://www.linkedin.com/in/gkislin\n");
+        contacts.put(ContactType.GITHUB, "https://github.com/gkislin\n");
+        contacts.put(ContactType.STACKOVERFLOW, "https://stackoverflow.com/users/548473/grigory-kislin\n");
+        contacts.put(ContactType.HOMEPAGE, "http://gkislin.ru/\n");
+
+        Map<SectionType, Section> sections = resume.getSections();
+
+        Section textClassPersonal = new TextSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры. \n");
+        sections.put(SectionType.PERSONAL, textClassPersonal);
+
+        Section textClassObjective = new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям\n");
+        sections.put(SectionType.OBJECTIVE, textClassObjective);
+
         achievementsList.add("С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\", " +
                 "\"Многомодульный maven. Многопоточность. XML (JAXB/StAX). Веб сервисы (JAX-RS/SOAP). " +
                 "Удаленное взаимодействие (JMS/AKKA)\". Организация онлайн стажировок и ведение проектов." +
@@ -25,14 +43,18 @@ public class ResumeTestData {
                 " для администрирования и мониторинга системы по JMX (Jython/ Django).\n");
         achievementsList.add("Реализация протоколов по приему платежей всех основных платежных системы России (Cyberplat, Eport, Chronopay, Сбербанк)," +
                 " Белоруcсии(Erip, Osmp) и Никарагуа.\n");
+        Section listClassAchievement = new ListSection(achievementsList);
+        sections.put(SectionType.ACHIEVEMENT, listClassAchievement);
+
         List<String> qualificationsList = new ArrayList<>();
         qualificationsList.add("JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2 \n");
         qualificationsList.add("Version control: Subversion, Git, Mercury, ClearCase, Perforce\n");
         qualificationsList.add("DB: PostgreSQL(наследование, pgplsql, PL/Python), Redis (Jedis), H2, Oracle\n");
         qualificationsList.add("MySQL, SQLite, MS SQL, HSQLDB\n");
+        Section listClassQualifications = new ListSection(qualificationsList);
+        sections.put(SectionType.QUALIFICATIONS, listClassQualifications);
 
         List<Organization> experienceList = new ArrayList<>();
-
         Organization experience1 = new Organization("Alcatel\n", "www.alcatel.ru\n", LocalDate.of(1997, 9, 1),
                 LocalDate.of(2005, 1, 1), "Инженер по аппаратному и программному тестированию",
                 "Тестирование, отладка, внедрение ПО цифровой телефонной станции Alcatel 1000 S12 (CHILL, ASM).");
@@ -43,6 +65,9 @@ public class ResumeTestData {
                         " Siemens @vantage (Java, Unix).\n");
         experienceList.add(experience1);
         experienceList.add(experience2);
+        Section listClassExperience = new OrganizationSection(experienceList);
+        sections.put(SectionType.EXPERIENCE, listClassExperience);
+
         List<Organization> educationList = new ArrayList<>();
         Organization education1 = new Organization("Заочная физико-техническая школа при МФТИ\n",
                 "http://www.school.mipt.ru/\n", LocalDate.of(1984, 9, 1),
@@ -53,29 +78,9 @@ public class ResumeTestData {
                 LocalDate.of(1996, 7, 1), "Закончил с отличием\n", null);
         educationList.add(education1);
         educationList.add(education2);
-
-        Map<SectionType, Section> sections = resume.getSections();
-        Section textClassPersonal = new TextArea("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры. \n");
-        Section textClassObjective = new TextArea("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям\n");
-        Section listClassAchievement = new ListArea(achievementsList);
-        Section listClassQualifications = new ListArea(qualificationsList);
-        Section listClassExperience = new OrganizationArea(experienceList);
-        Section listClassEducation = new OrganizationArea(educationList);
-        sections.put(SectionType.PERSONAL, textClassPersonal);
-        sections.put(SectionType.OBJECTIVE, textClassObjective);
-        sections.put(SectionType.ACHIEVEMENT, listClassAchievement);
-        sections.put(SectionType.QUALIFICATIONS, listClassQualifications);
-        sections.put(SectionType.EXPERIENCE, listClassExperience);
+        Section listClassEducation = new OrganizationSection(educationList);
         sections.put(SectionType.EDUCATION, listClassEducation);
 
-        Map<ContactType, String> contacts = resume.getContacts();
-        contacts.put(ContactType.PHONE, "+7(921) 855-0482\n");
-        contacts.put(ContactType.SKYPE, "grigory.kislin\n");
-        contacts.put(ContactType.EMAIL, "gkislin@yandex.ru\n");
-        contacts.put(ContactType.LINKEDIN, "https://www.linkedin.com/in/gkislin\n");
-        contacts.put(ContactType.GITHUB, "https://github.com/gkislin\n");
-        contacts.put(ContactType.STACKOVERFLOW, "https://stackoverflow.com/users/548473/grigory-kislin\n");
-        contacts.put(ContactType.HOMEPAGE, "http://gkislin.ru/\n");
         System.out.println(resume + "\n");
     }
 }

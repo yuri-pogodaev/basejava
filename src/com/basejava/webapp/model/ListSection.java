@@ -3,10 +3,10 @@ package com.basejava.webapp.model;
 import java.util.List;
 import java.util.Objects;
 
-public class ListArea implements Section {
+public class ListSection implements Section {
     private final List<String> part;
 
-    public ListArea(List<String> part) {
+    public ListSection(List<String> part) {
         Objects.requireNonNull(part, "part must not be null");
         this.part = part;
     }
@@ -22,7 +22,7 @@ public class ListArea implements Section {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ListArea that = (ListArea) o;
+        ListSection that = (ListSection) o;
         return part.equals(that.part);
     }
 

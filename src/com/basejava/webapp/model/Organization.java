@@ -37,7 +37,7 @@ public class Organization {
         return startDate;
     }
 
-    public LocalDate getFinalDate() {
+    public LocalDate getFinalDate() { 
         return finalDate;
     }
 
