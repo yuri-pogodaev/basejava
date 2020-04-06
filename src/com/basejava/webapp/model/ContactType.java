@@ -17,7 +17,7 @@ public enum ContactType {
         this.title = title;
     }
 
-    String getTitle() {
+    public String getTitle() {
         return title;
     }
 }

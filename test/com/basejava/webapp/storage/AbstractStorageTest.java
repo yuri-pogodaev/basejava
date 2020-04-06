@@ -7,7 +7,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,11 +24,11 @@ public abstract class AbstractStorageTest {
     private static final Resume R4;
 
     static {
-        R1 = new Resume(UUID_1, "Name1");
+//        R1 = new Resume(UUID_1, "Name1");
+        R1 = ResumeTestData.generateResume(UUID_1, "Name1");
         R2 = new Resume(UUID_2, "Name2");
         R3 = new Resume(UUID_3, "Name3");
         R4 = new Resume(UUID_4, "Name4");
-
     }
 
     protected AbstractStorageTest(Storage storage) {
