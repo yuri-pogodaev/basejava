@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static com.basejava.webapp.util.DataUtil.NOW;
+import static java.time.LocalDate.of;
+
 public class ResumeTestData {
     protected ResumeTestData() {
     }
@@ -56,14 +59,14 @@ public class ResumeTestData {
         // Раздел "Опыт работы"
         List<Organization> organizationExpList = new ArrayList<>();
         // Первая работа
-        Position javaops = new Position(LocalDate.of(2013, 10, 2), LocalDate.now(), "Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок.");
+        Position javaops = new Position(of(2013, 10, 2), NOW, "Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок.");
         Link javaopsLink = new Link("JavaOps", "http://javaops.ru/");
         List<Position> firstJob = new ArrayList<>();
         firstJob.add(javaops);
         Organization firstOrganization = new Organization(javaopsLink, firstJob);
         organizationExpList.add(firstOrganization);
         // Вторая работа
-        Position wrike = new Position(LocalDate.of(2014, 10, 2), LocalDate.of(2016, 1, 1), "Старший разработчик (backend)", "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.");
+        Position wrike = new Position(of(2014, 10, 2), of(2016, 1, 1), "Старший разработчик (backend)", "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.");
         Link wrikeLink = new Link("Wrike", "https://www.wrike.com/");
         List<Position> secondJob = new ArrayList<>();
         secondJob.add(wrike);
@@ -77,7 +80,7 @@ public class ResumeTestData {
         // Раздел "Образование
         List<Organization> educationExpList = new ArrayList<>();
         // Первое место
-        Position Coursera = new Position(LocalDate.of(2013, 3, 1), LocalDate.of(2013, 5, 1), "\"Functional Programming Principles in Scala\" by Martin Odersky", null);
+        Position Coursera = new Position(of(2013, 3, 1), of(2013, 5, 1), "\"Functional Programming Principles in Scala\" by Martin Odersky", null);
         Link CourseraLink = new Link("Coursera", "https://www.coursera.org/course/progfun");
         List<Position> firstEdu = new ArrayList<>();
         firstEdu.add(Coursera);
@@ -85,8 +88,8 @@ public class ResumeTestData {
 
         educationExpList.add(firstEducation);
         // Второе место
-        Position itmo1 = new Position(LocalDate.of(1993, 9, 1), LocalDate.of(1996, 7, 1), "Аспирантура (программист С, С++)", null);
-        Position itmo2 = new Position(LocalDate.of(1987, 9, 1), LocalDate.of(1993, 7, 1), "Инженер (программист Fortran, C)", null);
+        Position itmo1 = new Position(of(1993, 9, 1), of(1996, 7, 1), "Аспирантура (программист С, С++)", null);
+        Position itmo2 = new Position(of(1987, 9, 1), of(1993, 7, 1), "Инженер (программист Fortran, C)", null);
         Link itmoLink = new Link("IFMO", "http://www.ifmo.ru/");
         List<Position> secondEdu = new ArrayList<>();
         secondEdu.add(itmo1);
