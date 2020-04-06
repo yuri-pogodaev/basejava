@@ -2,7 +2,6 @@ package com.basejava.webapp.storage;
 
 import com.basejava.webapp.model.*;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -11,8 +10,6 @@ import static com.basejava.webapp.util.DataUtil.NOW;
 import static java.time.LocalDate.of;
 
 public class ResumeTestData {
-    protected ResumeTestData() {
-    }
 
     public static void main(String[] args) {
         printResume(generateResume("uuid1", "Григорий Кислин"));
