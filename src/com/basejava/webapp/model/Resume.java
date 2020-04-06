@@ -33,9 +33,21 @@ public class Resume implements Comparable<Resume> {
     public Map<ContactType, String> getContacts() {
         return contacts;
     }
+//test
+    public void putContact(ContactType contactType, String field) {
+        contacts.put(contactType, field);
+    }
+
+    public void putSection(SectionType sectionType, Section section) {
+        sections.put(sectionType, section);
+    }
 
     public String getUuid() {
         return uuid;
+    }
+
+    public String getFullName() {
+        return fullName;
     }
 
     @Override
