@@ -3,9 +3,9 @@ package com.basejava.webapp.storage;
 import com.basejava.webapp.exception.StorageException;
 import com.basejava.webapp.model.Resume;
 
-import java.io.DataOutput;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -35,7 +35,11 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected void doUpdate(Resume resume, File file) {
-
+        try {
+            doWrite(resume, file);
+        } catch (Exception e) {
+            throw new StorageException("File do not update", resume.getUuid(), e);
+        }
     }
 
     @Override
@@ -44,34 +48,60 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
             file.createNewFile();
             doWrite(resume, file);
         } catch (IOException e) {
-            throw new StorageException("IO erroe", file.getName(), e);
+            throw new StorageException("IO error", file.getName(), e);
         }
     }
 
-    protected abstract void doWrite(Resume resume, File file);
+    protected abstract void doWrite(Resume resume, File file) throws IOException;
+
+    protected abstract void doGetFile(File file) throws IOException;
 
     @Override
     protected void doDelete(File file) {
-
+        if (!file.delete()) {
+            throw new StorageException("File do not delete", file.getName());
+        }
     }
 
     @Override
     protected Resume doGet(File file) {
+        try {
+            doGetFile(file);
+        } catch (IOException e) {
+            throw new StorageException("File get error", file.getName());
+        }
         return null;
     }
 
     @Override
     protected List<Resume> doCopyAll() {
-        return null;
+        File[] files = directory.listFiles();
+        if (files == null) {
+            throw new StorageException("Directory is empty", null);
+        }
+        List<Resume> listResume = new ArrayList<>(files.length);
+        for (File file : files) {
+            listResume.add(doGet(file));
+        }
+        return listResume;
     }
 
     @Override
     public void clear() {
-
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                doDelete(file);
+            }
+        }
     }
 
     @Override
     public int size() {
-        return 0;
+        String[] file = directory.list();
+        if (file == null) {
+            throw new StorageException("Error size", null);
+        }
+        return file.length;
     }
 }
