@@ -39,16 +39,16 @@ public class MainFile {
     }
     //https://stackoverflow.com/questions/10655085/print-directory-tree
     //pepino answer
+    //TODO проверка на 0 listFiles
     private static void structure(File folder, String tabulator) {
-
         File content[] = folder.listFiles();
         if (content != null) {
-            for (int i = 0; i < content.length; i++) {
-                if (content[i].isDirectory()) {
-                    System.out.println(tabulator + "|-" + content[i].getName());
-                    structure(content[i], tabulator + "| ");
+            for (File file : content) {
+                if (file.isDirectory()) {
+                    System.out.println(tabulator + "|-" + file.getName());
+                    structure(file, tabulator + "| ");
                 } else {
-                    System.out.println(tabulator + "+-" + content[i].getName().toString());
+                    System.out.println(tabulator + "+-" + file.getName());
                 }
             }
         }

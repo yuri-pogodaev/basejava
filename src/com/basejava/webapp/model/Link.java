@@ -1,19 +1,22 @@
 package com.basejava.webapp.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Link {
-    private final String title;
+public class Link implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    private final String name;
     private final String url;
 
-    public Link(String title, String url) {
-        Objects.requireNonNull(title, "Title is null");
-        this.title = title;
+    public Link(String name, String url) {
+        Objects.requireNonNull(name, "Title is null");
+        this.name = name;
         this.url = url;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
     public String getUrl() {
@@ -26,18 +29,18 @@ public class Link {
         if (o == null || getClass() != o.getClass()) return false;
         Link link = (Link) o;
 
-        return title.equals(link.title) && Objects.equals(url, link.url);
+        return name.equals(link.name) && Objects.equals(url, link.url);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, url);
+        return Objects.hash(name, url);
     }
 
     @Override
     public String toString() {
         return "Link{" +
-                "title='" + title + '\'' +
+                "title='" + name + '\'' +
                 ", url='" + url + '\'' +
                 '}';
     }
