@@ -3,6 +3,7 @@ package com.basejava.webapp;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Objects;
 
 public class MainFile {
     public static void main(String[] args) {
@@ -30,26 +31,21 @@ public class MainFile {
         }
 
         File folder = new File("./src/");
-        if (!folder.exists()) {
-            System.out.println(args[0] + "NO exist");
-            return;
-        }
         structure(folder, "");
 
     }
+
     //https://stackoverflow.com/questions/10655085/print-directory-tree
     //pepino answer
-    //TODO проверка на 0 listFiles
-    private static void structure(File folder, String tabulator) {
-        File content[] = folder.listFiles();
-        if (content != null) {
-            for (File file : content) {
-                if (file.isDirectory()) {
-                    System.out.println(tabulator + "|-" + file.getName());
-                    structure(file, tabulator + "| ");
-                } else {
-                    System.out.println(tabulator + "+-" + file.getName());
-                }
+    private static void structure(File dir, String tabulator) {
+        File[] content;
+        content = dir.listFiles();
+        for (File file : Objects.requireNonNull(content)) {
+            if (file.isDirectory()) {
+                System.out.println(tabulator + "|-" + file.getName());
+                structure(file, tabulator + "| ");
+            } else {
+                System.out.println(tabulator + "+-" + file.getName());
             }
         }
     }
