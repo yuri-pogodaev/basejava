@@ -31,13 +31,17 @@ public class MainFile {
         }
 
         File folder = new File("./src/");
-        structure(folder, "");
+        try {
+            structure(folder, "");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
     //https://stackoverflow.com/questions/10655085/print-directory-tree
     //pepino answer
-    private static void structure(File dir, String tabulator) {
+    private static void structure(File dir, String tabulator) throws IOException {
         File[] content;
         content = dir.listFiles();
         for (File file : Objects.requireNonNull(content)) {
