@@ -23,10 +23,12 @@ public class PathStorage extends AbstractStorage<Path> {
     protected PathStorage(String dir, SerializationStrategy serializationStrategy) {
         directory = Paths.get(dir);
         Objects.requireNonNull(directory, "Directory not must be null");
+        this.serializationStrategy = serializationStrategy;
+
         if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {
             throw new IllegalArgumentException(dir + "is not directory or is not writable");
         }
-        this.serializationStrategy = serializationStrategy;
+
     }
 
     @Override
@@ -72,14 +74,14 @@ public class PathStorage extends AbstractStorage<Path> {
         try {
             return serializationStrategy.doRead(new BufferedInputStream(Files.newInputStream(path)));
         } catch (IOException e) {
-            throw new StorageException("Path get error", path.getFileName().toString() , e);
+            throw new StorageException("Path get error", path.getFileName().toString(), e);
         }
     }
 
     @Override
     protected List<Resume> doCopyAll() {
 
-        return  getFileList(directory).map(this::doGet).collect(Collectors.toList());
+        return getFileList(directory).map(this::doGet).collect(Collectors.toList());
     }
 
     @Override
@@ -98,5 +100,9 @@ public class PathStorage extends AbstractStorage<Path> {
         } catch (IOException e) {
             throw new StorageException("Directory read error", null);
         }
+    }
+
+    private String getFileName(Path path) {
+        return path.getFileName().toString();
     }
 }

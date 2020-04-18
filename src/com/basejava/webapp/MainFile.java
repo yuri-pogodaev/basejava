@@ -32,7 +32,7 @@ public class MainFile {
 
         File folder = new File("./src/");
         try {
-            structure(folder, "");
+            printDirDeeply(folder, "");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -41,13 +41,13 @@ public class MainFile {
 
     //https://stackoverflow.com/questions/10655085/print-directory-tree
     //pepino answer
-    private static void structure(File dir, String tabulator) throws IOException {
+    private static void printDirDeeply(File dir, String tabulator) throws IOException {
         File[] content;
         content = dir.listFiles();
         for (File file : Objects.requireNonNull(content)) {
             if (file.isDirectory()) {
                 System.out.println(tabulator + "|-" + file.getName());
-                structure(file, tabulator + "| ");
+                printDirDeeply(file, tabulator + "| ");
             } else {
                 System.out.println(tabulator + "+-" + file.getName());
             }

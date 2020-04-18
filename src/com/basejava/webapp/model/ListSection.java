@@ -7,7 +7,10 @@ import java.util.Objects;
 public class ListSection extends Section {
     private static final long serialVersionUID = 1L;
 
-    private final List<String> part;
+    private List<String> part;
+
+    public ListSection() {
+    }
 
     public ListSection(String... part) {
         this(Arrays.asList(part));
