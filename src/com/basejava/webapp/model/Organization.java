@@ -94,7 +94,7 @@ public class Organization implements Serializable {
             this.startDate = startDate;
             this.finalDate = finalDate;
             this.position = position;
-            this.description = description;
+            this.description = description == null ? "" : description;
         }
 
         public LocalDate getStartDate() {

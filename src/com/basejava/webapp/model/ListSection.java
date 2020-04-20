@@ -21,6 +21,10 @@ public class ListSection extends Section {
         this.part = part;
     }
 
+    public List<String> getPart() {
+        return part;
+    }
+
     @Override
     public String toString() {
         return "ListSection{" +
