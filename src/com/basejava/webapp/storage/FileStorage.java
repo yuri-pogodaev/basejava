@@ -5,9 +5,10 @@ import com.basejava.webapp.model.Resume;
 import com.basejava.webapp.storage.serializer.SerializationStrategy;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class FileStorage extends AbstractStorage<File> {
     private File directory;
@@ -68,38 +69,29 @@ public class FileStorage extends AbstractStorage<File> {
     protected Resume doGet(File file) {
         try {
             return serializationStrategy.doRead(new BufferedInputStream(new FileInputStream(file)));
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new StorageException("File get error", file.getName());
         }
     }
 
     @Override
     protected List<Resume> doCopyAll() {
-        List<Resume> listResume = new ArrayList<>(checkFile().length);
-        for (File file : checkFile()) {
-            listResume.add(doGet(file));
-        }
-        return listResume;
+        return checkFile().map(this::doGet).collect(Collectors.toList());
     }
 
     @Override
     public void clear() {
-        if (checkFile() != null) {
-            for (File file : checkFile()) {
-                doDelete(file);
-            }
+        checkFile().forEach(this::doDelete);
         }
-    }
 
     @Override
     public int size() {
-        return checkFile().length;
+        return (int) checkFile().count();
     }
 
-    private File[] checkFile() {
+    private Stream<File> checkFile() {
         if (directory.listFiles() == null) {
-            throw new StorageException("Director is empty");
-        }
-        return directory.listFiles();
+            throw new StorageException("Director read error");
+        } else return Stream.of(Objects.requireNonNull(directory.listFiles()));
     }
 }
