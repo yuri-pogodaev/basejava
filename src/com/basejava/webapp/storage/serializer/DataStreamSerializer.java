@@ -137,7 +137,7 @@ public class DataStreamSerializer implements SerializationStrategy {
         return list;
     }
 
-    private LocalDate readDate(DataInputStream dis) throws IOException {
+     private LocalDate readDate(DataInputStream dis) throws IOException {
         return LocalDate.of(dis.readInt(), dis.readInt(), 1);
     }
 }
