@@ -72,7 +72,7 @@ public class Organization implements Serializable {
         private LocalDate startDate;
         @XmlJavaTypeAdapter(LocalDateAdapter.class)
         private LocalDate finalDate;
-        private String position;
+        private String title;
         private String description;
 
         public Position() {
@@ -86,14 +86,14 @@ public class Organization implements Serializable {
             this(of(startYear, startMonth), of(endYear, endMonth), position, description);
         }
 
-        public Position(LocalDate startDate, LocalDate finalDate, String position, String description) {
+        public Position(LocalDate startDate, LocalDate finalDate, String title, String description) {
             Objects.requireNonNull(startDate, "parameter startDate is null");
             Objects.requireNonNull(finalDate, "parameter finalDate is null");
-            Objects.requireNonNull(position, "parameter position is null");
+            Objects.requireNonNull(title, "parameter position is null");
 
             this.startDate = startDate;
             this.finalDate = finalDate;
-            this.position = position;
+            this.title = title;
             this.description = description == null ? "" : description;
         }
 
@@ -105,8 +105,8 @@ public class Organization implements Serializable {
             return finalDate;
         }
 
-        public String getPosition() {
-            return position;
+        public String getTitle() {
+            return title;
         }
 
         public String getDescription() {
@@ -120,13 +120,13 @@ public class Organization implements Serializable {
 
             return startDate.equals(that.startDate) &&
                     finalDate.equals(that.finalDate) &&
-                    position.equals(that.position) &&
+                    title.equals(that.title) &&
                     Objects.equals(description, that.description);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(startDate, finalDate, position, description);
+            return Objects.hash(startDate, finalDate, title, description);
         }
 
         @Override
@@ -134,7 +134,7 @@ public class Organization implements Serializable {
             return "Position{" +
                     "startDate=" + startDate +
                     ", finalDate=" + finalDate +
-                    ", position='" + position + '\'' +
+                    ", position='" + title + '\'' +
                     ", description='" + description + '\'' +
                     '}';
         }

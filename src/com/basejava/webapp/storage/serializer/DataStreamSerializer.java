@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-public class DataStreamSerializer implements SerializationStrategy {
+public class DataStreamSerializer implements SerializationStrategy{
 
     @Override
     public void doWrite(Resume resume, OutputStream os) throws IOException {
@@ -47,7 +47,7 @@ public class DataStreamSerializer implements SerializationStrategy {
                             writeData(dos, org.getPositions(), position -> {
                                 writeDate(dos, position.getStartDate());
                                 writeDate(dos, position.getFinalDate());
-                                dos.writeUTF(position.getPosition());
+                                dos.writeUTF(position.getTitle());
                                 dos.writeUTF(position.getDescription());
                             });
                         });
@@ -69,13 +69,13 @@ public class DataStreamSerializer implements SerializationStrategy {
             //чтение секций
             readData(dis, () -> {
                 SectionType type = SectionType.valueOf(dis.readUTF());
-                resume.putSection(type, readData(dis, type));
+                resume.putSection(type, readSection(dis, type));
             });
             return resume;
         }
     }
 
-    private Section readData(DataInputStream dis, SectionType type) throws IOException {
+    private Section readSection(DataInputStream dis, SectionType type) throws IOException {
         switch (type) {
             case PERSONAL:
             case OBJECTIVE:
@@ -97,15 +97,15 @@ public class DataStreamSerializer implements SerializationStrategy {
         }
     }
 
-    private interface DataWriter<T> {
+    public interface DataWriter<T> {
         void write(T t) throws IOException;
     }
 
-    private interface DataReader {
+    public interface DataReader {
         void read() throws IOException;
     }
 
-    private interface ListDataReader<T> {
+    public interface ListDataReader<T> {
         T read() throws IOException;
     }
 

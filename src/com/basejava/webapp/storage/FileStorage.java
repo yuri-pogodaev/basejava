@@ -5,10 +5,9 @@ import com.basejava.webapp.model.Resume;
 import com.basejava.webapp.storage.serializer.SerializationStrategy;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class FileStorage extends AbstractStorage<File> {
     private File directory;
@@ -76,22 +75,22 @@ public class FileStorage extends AbstractStorage<File> {
 
     @Override
     protected List<Resume> doCopyAll() {
-        return checkFile().map(this::doGet).collect(Collectors.toList());
+        ArrayList<Resume> listResume = new ArrayList<>();
+        for (File file : Objects.requireNonNull(directory.listFiles())) {
+            listResume.add(doGet(file));
+        }
+        return listResume;
     }
 
     @Override
     public void clear() {
-        checkFile().forEach(this::doDelete);
+        for (File file : Objects.requireNonNull(directory.listFiles())) {
+            file.delete();
         }
+    }
 
     @Override
     public int size() {
-        return (int) checkFile().count();
-    }
-
-    private Stream<File> checkFile() {
-        if (directory.listFiles() == null) {
-            throw new StorageException("Director read error");
-        } else return Stream.of(Objects.requireNonNull(directory.listFiles()));
+        return Objects.requireNonNull(directory.listFiles()).length;
     }
 }
