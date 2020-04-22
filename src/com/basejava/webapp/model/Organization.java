@@ -49,8 +49,8 @@ public class Organization implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         Organization that = (Organization) o;
 
-        return link.equals(that.link) &&
-                positions.equals(that.positions);
+        return Objects.equals(link, that.link) &&
+                Objects.equals(positions, that.positions);
     }
 
     @Override
@@ -60,10 +60,7 @@ public class Organization implements Serializable {
 
     @Override
     public String toString() {
-        return "Organization{" +
-                "link=" + link.toString() +
-                ", positions=" + positions +
-                '}';
+        return "Organization(" + link + "," + positions + ')';
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
@@ -115,13 +112,13 @@ public class Organization implements Serializable {
 
         @Override
         public boolean equals(Object o) {
+            if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
-            Position that = (Position) o;
-
-            return startDate.equals(that.startDate) &&
-                    finalDate.equals(that.finalDate) &&
-                    title.equals(that.title) &&
-                    Objects.equals(description, that.description);
+            Position position = (Position) o;
+            return Objects.equals(startDate, position.startDate) &&
+                    Objects.equals(finalDate, position.finalDate) &&
+                    Objects.equals(title, position.title) &&
+                    Objects.equals(description, position.description);
         }
 
         @Override
@@ -131,12 +128,7 @@ public class Organization implements Serializable {
 
         @Override
         public String toString() {
-            return "Position{" +
-                    "startDate=" + startDate +
-                    ", finalDate=" + finalDate +
-                    ", position='" + title + '\'' +
-                    ", description='" + description + '\'' +
-                    '}';
+            return "Position(" + startDate + ',' + finalDate + ',' + title + ',' + description + ')';
         }
     }
 }

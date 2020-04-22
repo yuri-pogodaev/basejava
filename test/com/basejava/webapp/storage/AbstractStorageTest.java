@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.time.Month;
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class AbstractStorageTest {
@@ -28,10 +29,14 @@ public abstract class AbstractStorageTest {
 
     static {
 //        R1 = new Resume(UUID_1, "Name1");
-        R1 = ResumeTestData.generateResume(UUID_1, "Name1");
-        R2 = ResumeTestData.generateResume(UUID_2, "Name2");
-        R3 = ResumeTestData.generateResume(UUID_3, "Name3");
-        R4 = ResumeTestData.generateResume(UUID_4, "Name4");
+//        R1 = ResumeTestData.generateResume(UUID_1, "Name1");
+//        R2 = ResumeTestData.generateResume(UUID_2, "Name2");
+//        R3 = ResumeTestData.generateResume(UUID_3, "Name3");
+//        R4 = ResumeTestData.generateResume(UUID_4, "Name4");
+        R1 = new Resume(UUID_1, "Name1");
+        R2 = new Resume(UUID_2, "Name2");
+        R3 = new Resume(UUID_3, "Name3");
+        R4 = new Resume(UUID_4, "Name4");
 
         R1.putContact(ContactType.EMAIL, "mail1@ya.ru");
         R1.putContact(ContactType.PHONE, "11111");
@@ -100,7 +105,14 @@ public abstract class AbstractStorageTest {
     public void getAllSorted() throws Exception {
         List<Resume> list = storage.getAllSorted();
         Assert.assertEquals(3, list.size());
-//        Assert.assertEquals(list, Arrays.asList(R1, R2, R3));
+        Assert.assertEquals(list, Arrays.asList(R1, R2, R3));
+    }
+
+    @Test
+    public void get() throws Exception {
+        Assert.assertEquals(R1, storage.get(UUID_1));
+        Assert.assertEquals(R2, storage.get(UUID_2));
+        Assert.assertEquals(R3, storage.get(UUID_3));
     }
 
 
@@ -126,13 +138,6 @@ public abstract class AbstractStorageTest {
     @Test(expected = NotExistStorageException.class)
     public void deleteNotExist() throws Exception {
         storage.delete("dummy");
-    }
-
-    @Test
-    public void get() throws Exception {
-        Assert.assertEquals(R1, storage.get(UUID_1));
-//        Assert.assertEquals(R2, storage.get(UUID_2));
-//        Assert.assertEquals(R3, storage.get(UUID_3));
     }
 
     @Test(expected = NotExistStorageException.class)

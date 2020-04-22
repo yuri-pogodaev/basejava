@@ -27,9 +27,7 @@ public class ListSection extends Section {
 
     @Override
     public String toString() {
-        return "ListSection{" +
-                "part=" + part +
-                '}';
+        return part.toString();
     }
 
     @Override
@@ -42,6 +40,6 @@ public class ListSection extends Section {
 
     @Override
     public int hashCode() {
-        return Objects.hash(part);
+        return part.hashCode();
     }
 }

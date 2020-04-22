@@ -51,6 +51,14 @@ public class Resume implements Comparable<Resume>, Serializable {
         contacts.put(contactType, field);
     }
 
+    public String getContact(ContactType type) {
+        return contacts.get(type);
+    }
+
+    public Section getSection(SectionType type) {
+        return sections.get(type);
+    }
+
     public void putSection(SectionType sectionType, Section section) {
         sections.put(sectionType, section);
     }
@@ -78,11 +86,7 @@ public class Resume implements Comparable<Resume>, Serializable {
 
     @Override
     public int hashCode() {
-        int result = uuid.hashCode();
-        result = 31 * result + fullName.hashCode();
-        result = 31 * result + sections.hashCode();
-        result = 31 * result + contacts.hashCode();
-        return result;
+       return Objects.hash(uuid, fullName, contacts, sections);
     }
 
     @Override
@@ -93,11 +97,6 @@ public class Resume implements Comparable<Resume>, Serializable {
 
     @Override
     public String toString() {
-        return "Resume{" +
-                "uuid='" + uuid + '\'' +
-                ", fullName='" + fullName + '\'' +
-                ", sections=" + sections +
-                ", contacts=" + contacts +
-                '}';
+        return uuid + '(' + fullName + ')';
     }
 }

@@ -30,9 +30,7 @@ public class OrganizationSection extends Section  {
 
     @Override
     public String toString() {
-        return "OrganizationSection{" +
-                "organizations=" + organizations +
-                '}';
+        return organizations.toString();
     }
 
     @Override
@@ -45,6 +43,6 @@ public class OrganizationSection extends Section  {
 
     @Override
     public int hashCode() {
-        return Objects.hash(organizations);
+        return organizations.hashCode();
     }
 }

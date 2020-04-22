@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-public class DataStreamSerializer implements SerializationStrategy{
+public class DataStreamSerializer implements SerializationStrategy {
 
     @Override
     public void doWrite(Resume resume, OutputStream os) throws IOException {
@@ -19,13 +19,13 @@ public class DataStreamSerializer implements SerializationStrategy{
             Map<ContactType, String> contacts = resume.getContacts();
 
             //запись контактов в файл
-            writeData(dos, contacts.entrySet(), entry -> {
+            writeCollection(dos, contacts.entrySet(), entry -> {
                 dos.writeUTF(entry.getKey().name());
                 dos.writeUTF(entry.getValue());
             });
 
             //запись в файл остальных секций
-            writeData(dos, resume.getSections().entrySet(), entry -> {
+            writeCollection(dos, resume.getSections().entrySet(), entry -> {
                 SectionType type = entry.getKey();
                 Section section = entry.getValue();
                 dos.writeUTF(type.name());
@@ -36,24 +36,34 @@ public class DataStreamSerializer implements SerializationStrategy{
                         break;
                     case ACHIEVEMENT:
                     case QUALIFICATIONS:
-                        writeData(dos, ((ListSection) section).getPart(), dos::writeUTF);
+                        writeCollection(dos, ((ListSection) section).getPart(), dos::writeUTF);
                         break;
                     case EXPERIENCE:
                     case EDUCATION:
-                        writeData(dos, ((OrganizationSection) section).getOrganizations(), org -> {
+                        writeCollection(dos, ((OrganizationSection) section).getOrganizations(), org -> {
                             dos.writeUTF(org.getLink().getName());
                             dos.writeUTF(org.getLink().getUrl());
 
-                            writeData(dos, org.getPositions(), position -> {
+                            writeCollection(dos, org.getPositions(), position -> {
                                 writeDate(dos, position.getStartDate());
                                 writeDate(dos, position.getFinalDate());
                                 dos.writeUTF(position.getTitle());
                                 dos.writeUTF(position.getDescription());
                             });
                         });
+                        break;
                 }
             });
         }
+    }
+
+    private LocalDate readDate(DataInputStream dis) throws IOException {
+        return LocalDate.of(dis.readInt(), dis.readInt(), 1);
+    }
+
+    private void writeDate(DataOutputStream dos, LocalDate ld) throws IOException {
+        dos.writeInt(ld.getYear());
+        dos.writeInt(ld.getMonth().getValue());
     }
 
     @Override
@@ -97,6 +107,15 @@ public class DataStreamSerializer implements SerializationStrategy{
         }
     }
 
+    private <T> List<T> readList(DataInputStream dis, ListDataReader<T> reader) throws IOException {
+        int size = dis.readInt();
+        List<T> list = new ArrayList<>(size);
+        for (int i = 0; i < size; i++) {
+            list.add(reader.read());
+        }
+        return list;
+    }
+
     public interface DataWriter<T> {
         void write(T t) throws IOException;
     }
@@ -109,35 +128,17 @@ public class DataStreamSerializer implements SerializationStrategy{
         T read() throws IOException;
     }
 
-    private <T> void writeData(DataOutputStream dos, Collection<T> collection, DataWriter<T> writer) throws IOException {
-        dos.writeInt(collection.size());
-        for (T data : collection) {
-            writer.write(data);
-        }
-    }
-
-    private void writeDate(DataOutputStream dos, LocalDate ld) throws IOException {
-        dos.writeInt(ld.getYear());
-        dos.writeInt(ld.getMonth().getValue());
-    }
-
-    private <T> void readData(DataInputStream dis, DataReader reader) throws IOException {
+    private void readData(DataInputStream dis, DataReader reader) throws IOException {
         int size = dis.readInt();
         for (int i = 0; i < size; i++) {
             reader.read();
         }
     }
 
-    private <T> List<T> readList(DataInputStream dis, ListDataReader<T> reader) throws IOException {
-        int size = dis.readInt();
-        List<T> list = new ArrayList<>(size);
-        for (int i = 0; i < size; i++) {
-            list.add(reader.read());
+    private <T> void writeCollection(DataOutputStream dos, Collection<T> collection, DataWriter<T> writer) throws IOException {
+        dos.writeInt(collection.size());
+        for (T data : collection) {
+            writer.write(data);
         }
-        return list;
-    }
-
-     private LocalDate readDate(DataInputStream dis) throws IOException {
-        return LocalDate.of(dis.readInt(), dis.readInt(), 1);
     }
 }

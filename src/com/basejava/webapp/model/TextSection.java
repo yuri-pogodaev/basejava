@@ -29,13 +29,11 @@ public class TextSection extends Section {
 
     @Override
     public int hashCode() {
-        return Objects.hash(content);
+        return content.hashCode();
     }
 
     @Override
     public String toString() {
-        return "TextSection{" +
-                "content='" + content + '\'' +
-                '}';
+        return content;
     }
 }
