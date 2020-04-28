@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class FileStorage extends AbstractStorage<File> {
-    private File directory;
+    private final File directory;
 
-    private SerializationStrategy serializationStrategy;
+    private final SerializationStrategy serializationStrategy;
 
     protected FileStorage(File directory, SerializationStrategy serializationStrategy) {
         Objects.requireNonNull(directory, "Directory not must be null");
