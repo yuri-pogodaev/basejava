@@ -1,14 +1,14 @@
 package com.basejava.webapp.storage;
 
-import com.basejava.webapp.model.*;
+import com.basejava.webapp.model.Resume;
 
-import java.time.Month;
+import java.util.UUID;
 
 public class ResumeTestData {
-    public static final String UUID_1 = "uuid1";
-    public static final String UUID_2 = "uuid2";
-    public static final String UUID_3 = "uuid3";
-    public static final String UUID_4 = "uuid4";
+    public static final String UUID_1 = UUID.randomUUID().toString();
+    public static final String UUID_2 = UUID.randomUUID().toString();
+    public static final String UUID_3 = UUID.randomUUID().toString();
+    public static final String UUID_4 = UUID.randomUUID().toString();
 
     public static final Resume R1;
     public static final Resume R2;
@@ -21,7 +21,7 @@ public class ResumeTestData {
         R3 = new Resume(UUID_3, "Name3");
         R4 = new Resume(UUID_4, "Name4");
 
-        R1.putContact(ContactType.EMAIL, "mail1@ya.ru");
+  /*      R1.putContact(ContactType.EMAIL, "mail1@ya.ru");
         R1.putContact(ContactType.PHONE, "11111");
         R1.putSection(SectionType.OBJECTIVE, new TextSection("Objective1"));
         R1.putSection(SectionType.PERSONAL, new TextSection("Personal data"));
@@ -44,7 +44,7 @@ public class ResumeTestData {
                 new OrganizationSection(
                         new Organization("Organization2", "http://Organization2.ru",
                                 new Organization.Position(2015, Month.JANUARY, "position1", "content1"))));
-    }
+  */  }
 }
 
 
