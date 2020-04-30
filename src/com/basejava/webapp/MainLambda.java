@@ -15,7 +15,6 @@ public class MainLambda {
 
     private static int minValue(int[] values) {
         return Arrays.stream(values)//создаем стрим из массива
-                .boxed()//упаковываем в оболочку
                 .distinct()//возвращаем стрим без дубликатов
                 .sorted()//сортируем в в натуральном порядке
                 .reduce((x, y) -> x * 10 + y).orElse(0);//склеиваем значения
