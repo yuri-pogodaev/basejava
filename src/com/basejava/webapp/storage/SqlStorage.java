@@ -10,26 +10,28 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class SqlStorage implements Storage {
-    public static final String QUERY_CLEAR = "DELETE From resume";
-    public static final String QUERY_UPDATE = "UPDATE resume SET full_name = ? WHERE uuid = ?";
-    public static final String QUERY_SAVE = "INSERT INTO resume(uuid, full_name) VALUES (?,?)";
-    public static final String QUERY_GET = "SELECT * From resume r " +
+    private static final String QUERY_CLEAR = "DELETE From resume";
+    private static final String QUERY_UPDATE = "UPDATE resume SET full_name = ? WHERE uuid = ?";
+    private static final String QUERY_SAVE = "INSERT INTO resume(uuid, full_name) VALUES (?,?)";
+    private static final String QUERY_GET = "SELECT * From resume r " +
             " LEFT JOIN contact c " +
             "   ON r.uuid = c.resume_uuid " +
             " WHERE r.uuid =?";
-    public static final String QUERY_DELETE = "DELETE FROM resume WHERE uuid=?";
-    public static final String QUERY_SIZE = "SELECT count(*) FROM resume";
-    public static final String QUERY_GET_ALL_SORTED = "SELECT * From resume r " +
+    private static final String QUERY_DELETE = "DELETE FROM resume WHERE uuid=?";
+    private static final String QUERY_SIZE = "SELECT count(*) FROM resume";
+    private static final String QUERY_GET_ALL_SORTED = "SELECT * From resume r " +
             "LEFT JOIN contact c " +
             "ON r.uuid = c.resume_uuid " +
             "ORDER BY full_name,uuid";
-    public static final String QUERY_DELETE_CONTACT = "DELETE FROM contact WHERE resume_uuid=?";
-    public static final String QUERY_WRITE_CONTACT = ""
+    private static final String QUERY_DELETE_CONTACT = "DELETE FROM contact WHERE resume_uuid=?";
+    private static final String QUERY_WRITE_CONTACT = ""
             + " INSERT INTO contact (resume_uuid, type, value)"
             + "      VALUES (?, ?, ?)";
 
+    private static final Logger LOG = Logger.getLogger(AbstractStorage.class.getName());
     public final SqlHelper sqlHelper;
 
     public SqlStorage(String dbUrl, String dbUser, String dbPassword) {
@@ -38,6 +40,7 @@ public class SqlStorage implements Storage {
 
     @Override
     public void clear() {
+        LOG.info("Clear storage");
         sqlHelper.execute(QUERY_CLEAR, ps -> {
             ps.execute();
             return null;
@@ -46,6 +49,7 @@ public class SqlStorage implements Storage {
 
     @Override
     public void update(Resume resume) {
+        LOG.info("Update " + resume.getUuid());
         sqlHelper.transactionalExecute(conn -> {
             try (PreparedStatement ps = conn.prepareStatement(QUERY_UPDATE)) {
                 ps.setString(1, resume.getFullName());
@@ -62,6 +66,7 @@ public class SqlStorage implements Storage {
 
     @Override
     public void save(Resume resume) {
+        LOG.info("Save " + resume.getUuid());
         sqlHelper.transactionalExecute(conn -> {
                     try (PreparedStatement ps = conn.prepareStatement(QUERY_SAVE)) {
                         ps.setString(1, resume.getUuid());
@@ -76,6 +81,7 @@ public class SqlStorage implements Storage {
 
     @Override
     public Resume get(String uuid) {
+        LOG.info("Get storage size");
         return sqlHelper.execute(QUERY_GET,
                 ps -> {
                     ps.setString(1, uuid);
@@ -93,6 +99,7 @@ public class SqlStorage implements Storage {
 
     @Override
     public void delete(String uuid) {
+        LOG.info("Delete " + uuid);
         sqlHelper.execute(QUERY_DELETE, ps -> {
             ps.setString(1, uuid);
             if (ps.executeUpdate() == 0) {
@@ -104,6 +111,7 @@ public class SqlStorage implements Storage {
 
     @Override
     public int size() {
+        LOG.info("Get storage size");
         return sqlHelper.execute(QUERY_SIZE, ps -> {
             ResultSet rs = ps.executeQuery();
             return rs.next() ? rs.getInt(1) : 0;
@@ -112,20 +120,16 @@ public class SqlStorage implements Storage {
 
     @Override
     public List<Resume> getAllSorted() {
+        LOG.info("GetAll");
         return sqlHelper.execute(QUERY_GET_ALL_SORTED,
                 ps -> {
                     ResultSet rs = ps.executeQuery();
-
                     Map<String, Resume> map = new LinkedHashMap<>();
                     while (rs.next()) {
                         String uuid = rs.getString("uuid");
-                        Resume resume = map.get(uuid);
-                        if (resume == null) {
-                            String full_name = rs.getString("full_name");
-                            resume = new Resume(uuid, full_name);
-                        }
+                        String fullName = rs.getString("full_name");
+                        Resume resume = map.computeIfAbsent(uuid, k -> new Resume(uuid, fullName));
                         readContact(rs, resume);
-                        map.put(uuid, resume);
                     }
                     return new ArrayList<>(map.values());
                 });
