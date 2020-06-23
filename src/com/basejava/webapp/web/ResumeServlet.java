@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Writer;
 
 
 public class ResumeServlet extends HttpServlet {
@@ -33,26 +34,31 @@ public class ResumeServlet extends HttpServlet {
 //        String name = request.getParameter("name");
 //        response.getWriter().write(name == null ? "Hello Resumes!" : "Hello " + name + "!");
         PrintWriter writer = response.getWriter();
-        writer.println("<html>\n" +
-                "<head>\n" +
-                "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">" +
-                "<title>Список всех резюме.</title>\n" +
-                "<link rel=\"stylesheet\" href=\"css/style.css\">\n" +
-                "</head>\n" +
-                "<body>\n" +
-                "<table>\n" +
-                "<caption>Список резюме</caption>\n" +
-                "<tr>\n" + "<th>UUID</th>\n" +
-                "<th>Full_Name</th>\n" +
-                "</tr>\n");
-        for (Resume r : storage.getAllSorted()) {
-            writer.println("<tr>\n");
-            writer.println("<td>" + r.getUuid() + "</td>\n");
-            writer.println("<td>" + r.getFullName() + "</td>\n");
-            writer.println("</tr>\n");
+        writer.write(
+                " <html>\n" +
+                        "<head>\n" +
+                        "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n" +
+                        "<link rel=\"stylesheet\" href=\"css/style.css\">\n " +
+                        "<title>Резюме</title>\n" +
+                        "</head>\n" +
+                            "<body>\n" +
+                        "<section>\n" +
+                        "<table border =\"1\" cellpading=\"8\" cellspacing=\"0\">\n" +
+                        "<tr>\n" +
+                        " <th>UUID</th>\n" +
+                        " <th>Full_Name</th>\n" +
+                        " </tr>\n");
+        for (Resume resume : storage.getAllSorted()) {
+            writer.write(
+                    "<tr>\n" +
+                            "<td>" + resume.getUuid() + "</td>\n" +
+                            "<td>" + resume.getFullName() + "</td>\n" +
+                            "</tr>\n");
         }
-        writer.println("</table>\n" +
-                "</body>\n" +
-                "</html>\n");
+        writer.write(
+                "</table>" +
+                        "</section>\n" +
+                        "</body>\n" +
+                        "</html>\n");
     }
 }
