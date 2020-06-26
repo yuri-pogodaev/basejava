@@ -67,6 +67,10 @@ public class Resume implements Comparable<Resume>, Serializable {
         sections.put(sectionType, section);
     }
 
+    public void removeSection(SectionType type) {
+        sections.remove(type);
+    }
+
     public String getUuid() {
         return uuid;
     }

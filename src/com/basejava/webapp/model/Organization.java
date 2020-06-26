@@ -13,8 +13,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import static com.basejava.webapp.util.DataUtil.NOW;
-import static com.basejava.webapp.util.DataUtil.of;
+import static com.basejava.webapp.util.DateUtil.NOW;
+import static com.basejava.webapp.util.DateUtil.of;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Organization implements Serializable {
